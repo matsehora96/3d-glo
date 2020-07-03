@@ -20,23 +20,14 @@ window.addEventListener('DOMContentLoaded', function(){
         let timeInterval = setInterval(() => {
             let timer = getTimeRemaining();
             
-            if (timer.hours.toString().length === 1) {
-                timerHours.textContent = '0' + timer.hours;
-            } else {
-                timerHours.textContent = timer.hours;
-            }
+            (timer.hours.toString().length === 1) ? timerHours.textContent = '0' + timer.hours :
+            timerHours.textContent = timer.hours;
 
-            if (timer.minutes.toString().length === 1) {
-                timerMinutes.textContent = '0' + timer.minutes;
-            } else {
+            (timer.minutes.toString().length === 1) ? timerMinutes.textContent = '0' + timer.minutes :
                 timerMinutes.textContent = timer.minutes;
-            }
 
-            if (timer.seconds.toString().length === 1) {
-                timerSeconds.textContent = '0' + timer.seconds;
-            } else {
+            (timer.seconds.toString().length === 1) ? timerSeconds.textContent = '0' + timer.seconds :
                 timerSeconds.textContent = timer.seconds;
-            }
             
             if (timer.timeRemaining <= 0) {
                 clearInterval(timeInterval);
@@ -49,5 +40,5 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('3 july 2020');
+    countTimer('4 july 2020');
 });
