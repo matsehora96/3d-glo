@@ -1,12 +1,13 @@
 window.addEventListener('DOMContentLoaded', function(){
     'use stcrict';
-
-    function countTimer (deadline) {
+    
+    //Timer
+    const countTimer = (deadline) => {
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSeconds = document.querySelector('#timer-seconds');
         
-        function getTimeRemaining() {
+        const getTimeRemaining = () => {
             let dateStop = new Date(deadline).getTime(),
                 dateNow = new Date().getTime(),
                 timeRemaining = (dateStop - dateNow) / 1000,
@@ -40,5 +41,61 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('4 july 2020');
+    countTimer('5 july 2020');
+
+    //Menu
+    const toggleMenu = () =>{
+        const btnMenu = document.querySelector('.menu'),
+              menu = document.querySelector('menu'),
+              closeBtn = document.querySelector('.close-btn'),
+              menuItems = menu.querySelectorAll('ul>li');
+
+        const handlerMenu = () => {
+            menu.classList.toggle('active-menu');
+        }
+
+        btnMenu.addEventListener('click', handlerMenu);
+
+        closeBtn.addEventListener('click', handlerMenu);
+
+        menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
+    }
+
+    toggleMenu();
+
+    //popup
+
+    const togglePopup = () => {
+        const popup = document.querySelector('.popup'),
+              popupBtn = document.querySelectorAll('.popup-btn'),
+              popupClose = document.querySelector('.popup-close'),
+              screenWidth = document.documentElement.clientWidth;
+        
+        const fadeIn = () => {
+            popup.style.opacity = '0';
+            popup.style.display = 'block';
+            let interval = setInterval(function(){
+                if (+popup.style.opacity >= 1) {
+                    clearInterval(interval);
+                }
+                popup.style.opacity = +popup.style.opacity + 0.01;
+            }, 0.01);
+        }
+        
+        popupBtn.forEach((elem) => {
+            if (screenWidth < 768) {
+                elem.addEventListener('click', () => {
+                    popup.style.display = 'block';
+                });
+            } else {
+                elem.addEventListener('click', fadeIn);
+            }  
+        });
+
+        popupClose.addEventListener('click', () =>{
+            popup.style.display = 'none';
+        });
+    }
+
+    togglePopup();
 });
