@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('6 july 2020');
+    countTimer('8 july 2020');
 
     //Menu
     const toggleMenu = () =>{
@@ -155,12 +155,12 @@ window.addEventListener('DOMContentLoaded', function(){
     const slider = () => {
         const slide = document.querySelectorAll('.portfolio-item'),
             btn = document.querySelectorAll('.portfolio-btn'),
-            dot = document.querySelectorAll('.dot'),
             slider = document.querySelector('.portfolio-content'),
             dots = document.querySelector('.portfolio-dots');
 
         let currentSlide = 0,
-            interval;
+            interval,
+            dot = document.querySelectorAll('.dot');
 
         const prevSlide = (elem, index, strClass) => {
             elem[index].classList.remove(strClass);
@@ -171,13 +171,14 @@ window.addEventListener('DOMContentLoaded', function(){
         };
 
         const createDots = () => {
-            while (currentSlide < slide.length) {
+            let numSlide = 0;
+            while (numSlide < slide.length) {
                 let li = document.createElement('li');
                 li.classList.add('dot');
                 dots.appendChild(li);
-                currentSlide++;
+                numSlide++;
             }
-            
+            dot = document.querySelectorAll('.dot');
             dot[0].classList.add('dot-active');
         }
 
@@ -193,7 +194,6 @@ window.addEventListener('DOMContentLoaded', function(){
         };
 
         const startSlide = (time = 3000) => {
-            createDots();
             interval = setInterval(autoPlaySlide, time);
         };
 
@@ -202,6 +202,7 @@ window.addEventListener('DOMContentLoaded', function(){
         };
 
         slider.addEventListener('click', (event) =>{
+
             event.preventDefault();
 
             let target = event.target;
@@ -250,7 +251,9 @@ window.addEventListener('DOMContentLoaded', function(){
                 startSlide();
             }
         });
-        startSlide(150000);
+        
+        createDots();
+        startSlide(5000);
     }
 
     slider();
