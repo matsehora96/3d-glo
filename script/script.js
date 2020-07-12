@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('13 july 2020');
+    countTimer('14 july 2020');
 
     //Menu
     const toggleMenu = () =>{
@@ -268,26 +268,64 @@ window.addEventListener('DOMContentLoaded', function(){
             item.addEventListener('mouseenter', (e) =>{
                 e.target.src = e.target.dataset.img;
             });
+
             item.addEventListener('mouseleave', (e) =>{
                 e.target.src = src;
             });
         });
 
-    }
+    };
 
     changeImages();
 
-    //inputNumber 
-    const inputNumber = () => {
-        const input = document.querySelectorAll('.calc-block > input');
+    //Calculator
+    const calc = (price = 100) => {
+        const calcBlock = document.querySelector('.calc-block'),
+            input = document.querySelectorAll('.calc-block > input'),
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcDay = document.querySelector('.calc-day'),
+            calcCount = document.querySelector('.calc-count'),
+            totalValue = document.getElementById('total');
         
         input.forEach((item) =>{
             item.addEventListener('input', () =>{
                 item.value = item.value.replace(/\D/g, '');  
             });
         });
-    }
 
-    inputNumber();
+        const countSum = () => {
+            let total = 0,
+            countValue = 1,
+            dayValue = 1;
+            const typeValue = calcType.options[calcType.selectedIndex].value,
+                squareValue = +calcSquare.value;
 
+            if (calcCount.value > 1) {
+                countValue += (calcCount.value - 1) / 10;
+            }
+
+            if (calcDay.value && calcDay.value < 5) {
+                dayValue *= 2;
+            } else if (calcDay.value && calcDay.value < 10) {
+                dayValue *= 1.5;
+            }
+
+            if (typeValue && squareValue) {
+                total = price * typeValue * squareValue * countValue * dayValue;
+            }
+
+            totalValue.textContent = total;
+        };
+        
+        calcBlock.addEventListener('change', (event) => {
+            const target = event.target;
+
+            if (target.matches('select') || target.matches('input')) {
+                countSum();
+            }
+        });
+    };
+
+    calc(100);
 });
