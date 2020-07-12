@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('8 july 2020');
+    countTimer('13 july 2020');
 
     //Menu
     const toggleMenu = () =>{
@@ -257,4 +257,37 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     slider();
+
+    //Data images
+    const changeImages = () => {
+        const imageTeams = document.querySelectorAll('.command__photo');
+
+        imageTeams.forEach((item) =>{
+            const src = item.src;
+
+            item.addEventListener('mouseenter', (e) =>{
+                e.target.src = e.target.dataset.img;
+            });
+            item.addEventListener('mouseleave', (e) =>{
+                e.target.src = src;
+            });
+        });
+
+    }
+
+    changeImages();
+
+    //inputNumber 
+    const inputNumber = () => {
+        const input = document.querySelectorAll('.calc-block > input');
+        
+        input.forEach((item) =>{
+            item.addEventListener('input', () =>{
+                item.value = item.value.replace(/\D/g, '');  
+            });
+        });
+    }
+
+    inputNumber();
+
 });
