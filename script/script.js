@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function(){
         
     }
 
-    countTimer('15 july 2020');
+    countTimer('18 july 2020');
 
     //Menu
     const toggleMenu = () =>{
@@ -377,12 +377,14 @@ window.addEventListener('DOMContentLoaded', function(){
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
 
             formInput.forEach(item => {
                 item.value = '';
@@ -401,12 +403,14 @@ window.addEventListener('DOMContentLoaded', function(){
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
 
             formPopupInput.forEach(item => {
                 item.value = '';
@@ -425,39 +429,44 @@ window.addEventListener('DOMContentLoaded', function(){
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
 
             formQuestionInput.forEach(item => {
                 item.value = '';
             });
         });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
+        const postData = (body) => {
 
-            request.addEventListener('readystatechange', () => {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+
+                request.addEventListener('readystatechange', () => {
+                    
+
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+
+                    if (request.status === 200) {
+                        resolve();
+                    } else {
+                        reject(request.status);
+                    }
+                });
+
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
                 
-
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
+                request.send(JSON.stringify(body));
             });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            
-            request.send(JSON.stringify(body));
         }
     };
 
