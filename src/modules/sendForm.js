@@ -11,7 +11,8 @@ const sendForm = () => {
         formQuestionInput = formQuestion.querySelectorAll('input'),
         inputPhone = document.querySelectorAll('.form-phone'),
         userName = document.querySelectorAll('[name="user_name"]'),
-        formMessage = document.getElementById('form2-message');
+        formMessage = document.getElementById('form2-message'),
+        formEmail = document.querySelectorAll('.form-email');
 
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem; color: white;';
@@ -32,91 +33,118 @@ const sendForm = () => {
         formMessage.value = formMessage.value.replace(/([0-9a-zA-Z])/g, '');
     });
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        form.appendChild(statusMessage);
-        statusMessage.textContent = loadMessage;
-        const formData = new FormData(form);
-
-        let body = {};
-
-        formData.forEach((val, key) => {
-            body[key] = val;
+    formEmail.forEach((item) =>{
+        item.addEventListener('input', () =>{
+            item.value = item.value.replace(/([а-яА-ЯіІєЄ])/g, '');  
         });
+    });
 
-        postData(body)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('status network not 200');
-                }
-                statusMessage.textContent = successMessage;
-            })
-            .catch((error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
+    form.addEventListener('submit', (event) => { 
+        event.preventDefault();
+
+        if (form.querySelector('.form-phone').value.length > 4 && form.querySelector('.form-phone').value.length < 16) {
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form);
+
+            let body = {};
+
+            formData.forEach((val, key) => {
+                body[key] = val;
             });
 
-        formInput.forEach(item => {
-            item.value = '';
-        });
+            postData(body)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+
+            formInput.forEach(item => {
+                item.value = '';
+            });
+
+            setTimeout(() => {
+                statusMessage.remove();
+            }, 8000);
+        }
     });
 
     formPopup.addEventListener('submit', (event) => {
         event.preventDefault();
-        formPopup.appendChild(statusMessage);
-        statusMessage.textContent = loadMessage;
-        const formData = new FormData(formPopup);
 
-        let body = {};
+        if (formPopup.querySelector('.form-phone').value.length > 4 && formPopup.querySelector('.form-phone').value.length < 16) {
+            formPopup.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(formPopup);
 
-        formData.forEach((val, key) => {
-            body[key] = val;
-        });
+            let body = {};
 
-        postData(body)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('status network not 200');
-                }
-                statusMessage.textContent = successMessage;
-            })
-            .catch((error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
+            formData.forEach((val, key) => {
+                body[key] = val;
             });
 
-        formPopupInput.forEach(item => {
-            item.value = '';
-        });
+            postData(body)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+
+            formPopupInput.forEach(item => {
+                item.value = '';
+            });
+
+            setTimeout(() => {
+                statusMessage.remove();
+            }, 8000);
+        }
     });
 
     formQuestion.addEventListener('submit', (event) => {
         event.preventDefault();
-        formQuestion.appendChild(statusMessage);
-        statusMessage.textContent = loadMessage;
-        const formData = new FormData(formQuestion);
 
-        let body = {};
+        if (formQuestion.querySelector('.form-phone').value.length > 4 && formQuestion.querySelector('.form-phone').value.length < 16) {
+            formQuestion.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(formQuestion);
 
-        formData.forEach((val, key) => {
-            body[key] = val;
-        });
+            let body = {};
 
-        postData(body)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('status network not 200');
-                }
-                statusMessage.textContent = successMessage;
-            })
-            .catch((error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
+            formData.forEach((val, key) => {
+                body[key] = val;
             });
 
-        formQuestionInput.forEach(item => {
-            item.value = '';
-        });
+            postData(body)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+
+            formQuestionInput.forEach(item => {
+                item.value = '';
+            });
+
+            setTimeout(() => {
+                statusMessage.remove();
+            }, 8000);
+        }
     });
 
     const postData = (body) => {
