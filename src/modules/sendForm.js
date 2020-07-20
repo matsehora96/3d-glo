@@ -42,7 +42,7 @@ const sendForm = () => {
     form.addEventListener('submit', (event) => { 
         event.preventDefault();
 
-        if (form.querySelector('.form-phone').value.length > 4 && form.querySelector('.form-phone').value.length < 16) {
+        if (form.querySelector('.form-phone').value.length > 4 && form.querySelector('.form-phone').value.length < 16 && form.querySelector('.form-email').value.length > 0 && form.querySelector('[name="user_name"]').value.length > 0) {
             form.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(form);
@@ -78,7 +78,7 @@ const sendForm = () => {
     formPopup.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        if (formPopup.querySelector('.form-phone').value.length > 4 && formPopup.querySelector('.form-phone').value.length < 16) {
+        if (formPopup.querySelector('.form-phone').value.length > 4 && formPopup.querySelector('.form-phone').value.length < 16 && formPopup.querySelector('.form-email').value.length > 0 && formPopup.querySelector('[name="user_name"]').value.length > 0) {
             formPopup.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(formPopup);
@@ -114,7 +114,7 @@ const sendForm = () => {
     formQuestion.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        if (formQuestion.querySelector('.form-phone').value.length > 4 && formQuestion.querySelector('.form-phone').value.length < 16) {
+        if (formQuestion.querySelector('.form-phone').value.length > 4 && formQuestion.querySelector('.form-phone').value.length < 16 && formQuestion.querySelector('.form-email').value.length > 0 && formQuestion.querySelector('[name="user_name"]').value.length > 0 && formMessage.value.length > 0) {
             formQuestion.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(formQuestion);
